@@ -1,189 +1,159 @@
-# 📊 Amazon Sales Analysis (Python | Pandas | EDA)
+# 📊 E-Commerce Business Performance Analysis
 
-## 📌 Project Overview
+## 1. Business Context
 
-This project analyzes Amazon sales data to uncover **revenue drivers, demand patterns, and growth opportunities** across **time, geography, and product categories**.
-The focus is on **data cleaning, KPI creation, and business insights**, not just visualization.
+This project analyzes transactional sales data from an e-commerce business to evaluate **overall business performance** and identify **key revenue drivers**.  
+The analysis is conducted from the perspective of a **Data Analyst supporting business stakeholders**, with a focus on translating raw data into actionable insights.
 
----
-
-## 🎯 Business Objective
-
-To answer:
-
-* How is revenue trending over time?
-* Which categories and states drive most sales?
-* Where are the biggest growth and risk areas?
+The dataset reflects real-world e-commerce complexity, including order-line level granularity, multiple order statuses, and operational attributes such as fulfillment and shipping methods.
 
 ---
 
-## 🗂️ Dataset
+## 2. Objective
 
-* **Source:** Amazon Sales Report
-* **Rows:** ~129,000 order-line records
-* **Granularity:** Order-line level (multiple rows per order)
-* **Time Period:** March–June 2022
+The objectives of this analysis are to:
 
-### Key Columns
-
-* `Order ID`, `Date`, `Qty`, `revenue`
-* `Category`, `SKU`, `Style`
-* `ship_state`
-* `is_valid_sale`, `B2B`
+- Assess overall revenue and order performance
+- Understand sales trends and seasonality over time
+- Identify high-performing products and categories
+- Evaluate fulfillment and operational dependencies
+- Provide data-driven business recommendations
 
 ---
 
-## 🧹 Data Cleaning & Preparation
+## 3. Dataset Overview
 
-Key issues addressed:
+- **Source:** E-commerce sales transaction data
+- **Records:** ~129,000 order-line records
+- **Granularity:** Product-level line items (multiple rows per order)
+- **Time Period:** March–June 2022
+- **Key Fields:**
+  - Order ID
+  - Order Date
+  - Product SKU & Category
+  - Quantity
+  - Revenue (Amount)
+  - Order Status
+  - Fulfilment Method
+  - Shipping Location
 
-* Cancelled orders and zero-quantity rows
-* Inconsistent state names (`RAJASTHAN`, `RJ`, `rajasthan`)
-* Missing and inconsistent categorical values
-* Incorrect KPI calculations due to order-line granularity
-
-### Cleaning Actions
-
-* Created `is_valid_sale` to isolate completed sales
-* Standardized Indian state names into a clean `ship_state` column
-* Rebuilt date features (`order_month`, `order_year`)
-* Removed intermediate helper columns after validation
-
-📌 Result: **Analysis-ready dataset with preserved business logic**
-
----
-
-## 📐 KPIs Defined (Sales Only)
-
-| Metric                    | Value   |
-| ------------------------- | ------- |
-| Total Revenue             | ₹78.6M  |
-| Total Orders              | 120,378 |
-| Total Quantity Sold       | 116,649 |
-| Average Order Value (AOV) | ₹652.88 |
-| Avg Items per Order       | 1.08    |
-
-🔍 *Important Fix:*
-Average items per order was initially incorrect (<1) due to order-line granularity.
-This was corrected by aggregating quantity at the **order level**.
+Each row represents a **single product sold within an order**, requiring careful aggregation for order-level KPIs.
 
 ---
 
-## 📈 Time-Based Analysis
+## 4. Tools & Technologies
 
-* Revenue peaked in **April** and declined through **June**
-* Decline driven by **lower order volume**, not lower AOV
-* AOV increased in May and June → shift toward higher-value purchases
-
-**Charts Created**
-
-* Monthly Revenue (Line & Bar)
-* Monthly Orders
-* Monthly AOV
-* Month-over-Month Revenue Growth
+- Python  
+- Pandas  
+- NumPy  
+- Matplotlib  
+- Jupyter Notebook  
 
 ---
 
-## 🧵 Category Analysis
+## 5. Data Quality & Preparation
 
-Top revenue contributors:
+Several data quality challenges were addressed prior to analysis:
 
-* **Set** (~50%)
-* **Kurta**
-* **Western Dress**
+- Removed irrelevant and empty columns
+- Converted date fields to datetime format
+- Filtered out cancelled and non-revenue transactions
+- Validated quantity and revenue values
+- Standardized categorical fields for consistent grouping
 
-📌 Insight:
-
-> Top 3 categories contribute ~93% of total revenue, indicating strong category concentration.
-
----
-
-## 🗺️ Geographic Analysis
-
-### Top Revenue States
-
-* Maharashtra (17.2%)
-* Karnataka (13.5%)
-* Telangana
-* Uttar Pradesh
-* Tamil Nadu
-
-➡️ **Top 5 states contribute ~56% of revenue**
-
-### High-AOV, Low-Volume States
-
-* Ladakh
-* Nagaland
-* Lakshadweep
-
-📌 Insight:
-
-> Large states drive scale, while smaller states exhibit premium purchasing behavior.
+Only **valid sales transactions** were retained to ensure accurate performance measurement.
 
 ---
 
-## 💡 Key Insights
+## 6. Feature Engineering
 
-* Revenue is highly concentrated across a few categories and states
-* Order volume declined, but AOV increased over time
-* Strong dependency on Tier-1 states poses moderate concentration risk
-* Long-tail categories contribute minimal revenue
+To support business analysis, the following features were created:
 
----
+- **order_date** – standardized datetime column  
+- **order_month** – month-level aggregation for trend analysis  
+- **order_year** – year-based comparison  
+- **revenue** – standardized numeric revenue field  
+- **is_valid_sale** – flag identifying completed sales  
 
-## 📊 Business Recommendations
-
-* Increase basket size via bundling and cross-selling
-* Focus marketing spend on high-performing categories (Set, Kurta)
-* Expand mid-tier states to reduce geographic dependency
-* Rationalize or reposition low-performing categories
+These features enable reliable KPI calculation, time-series analysis, and downstream reporting.
 
 ---
 
-## 🛠️ Tools & Skills Used
+## 7. Exploratory Data Analysis (EDA)
 
-* Python
-* Pandas
-* Matplotlib
-* Exploratory Data Analysis (EDA)
-* Data Cleaning & Validation
-* KPI Design
-* Business Insight & Storytelling
+The EDA focused on four key areas:
 
----
+### 7.1 Business KPI Overview
+- Total Revenue  
+- Total Orders  
+- Total Quantity Sold  
+- Average Order Value (AOV)  
+- Average Items per Order  
 
-## 🚀 How to Run This Project
-
-```bash
-pip install pandas matplotlib
-```
-
-```python
-import pandas as pd
-import matplotlib.pyplot as plt
-```
-
-Open the notebook and run cells sequentially.
+These KPIs establish a baseline understanding of overall business performance.
 
 ---
 
-## 📌 Resume Bullet (Example)
+### 7.2 Revenue & Order Trends
+- Monthly revenue trends
+- Monthly order volume
+- Monthly AOV trends
 
-> Analyzed 129K+ Amazon sales records using Python to identify revenue drivers by time, category, and geography; built KPIs, cleaned messy address data, and delivered actionable business insights.
-
----
-
-## 📎 Next Improvements
-
-* Power BI / Tableau dashboard
-* SKU-level 80/20 (Pareto) analysis
-* B2B vs B2C comparison
-* Profitability analysis (if cost data available)
+This analysis helps identify whether growth is driven by **order volume** or **customer spend**.
 
 ---
 
-### ⭐ If you like this project
+### 7.3 Product & Category Performance
+- Revenue contribution by category
+- Top-performing products by revenue and quantity
+- Revenue concentration analysis to identify dependency risks
 
-Feel free to ⭐ the repo or fork it!
+---
 
-Just tell me the next number 👌
+### 7.4 Fulfilment & Operational Insights
+- Revenue by fulfilment method
+- Dependency on shipping service levels
+- Operational concentration risks
+
+---
+
+## 8. Key Insights (Summary)
+
+- Revenue performance is primarily driven by changes in order volume rather than AOV
+- A small subset of products and categories contributes a significant share of total revenue
+- Sales fulfillment is concentrated through limited operational channels, creating efficiency but potential risk
+
+---
+
+## 9. Business Recommendations
+
+Based on the analysis:
+
+- Focus pricing, inventory, and marketing decisions on high-revenue categories
+- Implement strategies to increase average order value through bundling or cross-selling
+- Monitor and diversify fulfillment operations to reduce dependency risks
+- Regularly track product performance to identify declining or emerging trends
+
+---
+
+## 10. Limitations & Assumptions
+
+- Customer-level lifetime value and retention analysis were limited due to anonymized data
+- Profitability analysis was constrained by incomplete cost information
+- Geographic insights are based on shipping location, which may not reflect customer origin
+
+---
+
+## 11. Next Steps
+
+Potential extensions of this project include:
+
+- Customer cohort and retention analysis using SQL
+- Product profitability analysis by integrating cost and expense data
+- Executive dashboard development using Power BI
+- Deeper geographic and operational efficiency analysis
+
+---
+
+## 12. Project Structure
+
