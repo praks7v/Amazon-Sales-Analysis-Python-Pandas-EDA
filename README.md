@@ -155,5 +155,3 @@ Potential extensions of this project include:
 
 ---
 
-## 12. Project Structure
-
